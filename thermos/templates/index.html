@@ -23,12 +23,12 @@
 
         <div class="header-container">
             <header class="wrapper clearfix">
-                <h1 class="title">h1.title</h1>
+                <h1 class="title">Thermos</h1>
                 <nav>
                     <ul>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
+                        <li><a href="#">Add URL</a></li>
+                        <li><a href="#">Sign up</a></li>
+                        <li><a href="#">Sign in</a></li>
                     </ul>
                 </nav>
             </header>
@@ -39,12 +39,12 @@
 
                 <article>
                     <header>
-                        <h1>article header h1</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
+                        <h1>Welcome {{data.initials()}}</h1>
+                        <p>Thermos is a simple social bookmarking site, for demo purposes for the pluralsight course to learn the Flask python framework for developing small web applications.</p>
                     </header>
                     <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
+                        <h2>{{title}}</h2>
+                        <p>{{text}}</p>
                     </section>
                     <section>
                         <h2>article section h2</h2>
