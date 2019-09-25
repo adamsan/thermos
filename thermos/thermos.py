@@ -1,10 +1,12 @@
 #!/bin/python3
 
 from flask import Flask, render_template, url_for, request, redirect
+from flask import flash, session
 import logging
 import datetime
 
 app = Flask(__name__)
+app.secret_key = 'this_is_super_secret123'  # import os; os.urandom(24)
 app.logger.setLevel(logging.DEBUG)
 
 bookmarks = []
@@ -40,6 +42,7 @@ def add():
         url = request.form['url']
         store_bookmark(url)
         app.logger.debug(f"stored url: {url}")
+        flash(f"stored url: {url}")
         return redirect(url_for('index'))
     return render_template('add.html')
 
