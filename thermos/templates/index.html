@@ -10,8 +10,14 @@ Thermos - Welcome
         <p>Thermos is a simple social bookmarking site, for demo purposes for the pluralsight course to learn the Flask python framework for developing small web applications.</p>
     </header>
     <section>
-        <h2>{{title}}</h2>
-        <p>{{text}}</p>
+        {% if new_bookmarks %}
+        <h2>Recently saved bookmarks:</h2>
+        {% for bm in new_bookmarks: %}
+        <p><a href="{{ bm.url }}">{{ bm.url }}</a>  was added by <i>{{ bm.user}}</i> on {{ bm.date }}</p>
+        {% endfor %}
+        {% else %}
+        No bookmarks yet.
+        {% endif %}
     </section>
     <section>
         <h2>article section h2</h2>
