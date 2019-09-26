@@ -6,6 +6,8 @@ from flask import flash, session
 import logging
 import datetime
 
+from forms import BookmarkForm
+
 app = Flask(__name__)
 #app.secret_key = 'this_is_super_secret123'  # import os; os.urandom(24)
 app.config['SECRET_KEY'] = os.urandom(24)
@@ -14,9 +16,10 @@ app.logger.setLevel(logging.DEBUG)
 bookmarks = []
 
 
-def store_bookmark(url):
+def store_bookmark(url, description):
     bookmarks.append({
         'url': url,
+        'description': description,
         'user': 'adamsan',
         'date': datetime.datetime.utcnow()
     })
@@ -44,13 +47,13 @@ def index():
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
-    if request.method == 'POST':
-        url = request.form['url']
-        store_bookmark(url)
-        app.logger.debug(f"stored url: {url}")
+    form = BookmarkForm()
+    if form.validate_on_submit():
+        url, description = form.url.data, form.description.data
+        store_bookmark(url, description)
         flash(f"stored url: {url}")
         return redirect(url_for('index'))
-    return render_template('add.html')
+    return render_template('add.html', form=form)
 
 
 @app.errorhandler(404)
