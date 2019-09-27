@@ -389,3 +389,8 @@ nav a:hover {
 article.flashes {
     margin-bottom: 1em;
 }
+
+/*---------------- show errors ----------------*/
+.error {
+    color:red;
+}

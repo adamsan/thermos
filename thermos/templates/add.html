@@ -8,7 +8,14 @@ Thermos - Add a URL
     <h1>Add a URL</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
-        <p>
+        <div class="error">
+            {%  for error in form.url.errors %}
+            <p>
+                {{ error }}
+            </p>
+            {% endfor %}
+        </div>
+        <p {% if form.url.errors %}class="error" {% endif %}>
         Please enter your bookmark here!
         </p>
         <p>
