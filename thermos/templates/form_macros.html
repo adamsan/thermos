@@ -1,0 +1,18 @@
+{% macro render_field(field) %}
+
+<tr {% if field.errors %}class="error" {% endif %}>
+    <td>{{ field.label }}</td>
+    <td>{{ field(**kwargs)|safe }}</td> <!-- #kwargs will become attributes, safe - jinja filter - not escape special chars -->
+</tr>
+<tr class="error">
+    <td></td>
+    <td>
+        <ul>
+            {% for error in field.errors%}
+            <li>{{error}}</li>
+            {% endfor %}
+        </ul>
+    </td>
+</tr>
+
+{% endmacro %}
