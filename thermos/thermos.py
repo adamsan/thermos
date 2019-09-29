@@ -3,46 +3,46 @@ import os
 from typing import List
 from flask import Flask, render_template, url_for, request, redirect
 from flask import flash, session
+from flask_sqlalchemy import SQLAlchemy
 import logging
 import datetime
+import models
+from sqlalchemy.exc import OperationalError
 
 from forms import BookmarkForm
 
-app = Flask(__name__)
-#app.secret_key = 'this_is_super_secret123'  # import os; os.urandom(24)
-app.config['SECRET_KEY'] = os.urandom(24)
-app.logger.setLevel(logging.DEBUG)
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-bookmarks = []
+app = Flask(__name__)
+# app.secret_key = 'this_is_super_secret123'  # import os; os.urandom(24)
+app.config['SECRET_KEY'] = os.urandom(24)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
+app.logger.setLevel(logging.DEBUG)
+db = SQLAlchemy(app)
 
 
 def store_bookmark(url, description):
-    bookmarks.append({
-        'url': url,
-        'description': description,
-        'user': 'adamsan',
-        'date': datetime.datetime.utcnow()
-    })
+    try:
+        bm = models.Bookmark(url=url, description=description)
+        db.session.add(bm)
+        db.session.commit()
+    except OperationalError:
+        models.create_db()
 
 
 def new_bookmarks(num: int) -> List[dict]:
-    return sorted(bookmarks, key=lambda bm: bm['date'], reverse=True)[:num]
-
-
-class User:
-    def __init__(self, firstname, lastname):
-        self.firstname = firstname
-        self.lastname = lastname
-
-    def initials(self):
-        return f"{self.firstname} {self.lastname}"
+    try:
+        return db.session().query(models.Bookmark).all()
+    except OperationalError:
+        models.create_db()
+    finally:
+        return db.session().query(models.Bookmark).all()
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-    data = User('Albert', 'Einstein')
-    return render_template('index.html', data=data, new_bookmarks=new_bookmarks(5))
+    return render_template('index.html', new_bookmarks=new_bookmarks(5))
 
 
 @app.route('/add', methods=['GET', 'POST'])
