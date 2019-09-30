@@ -1,5 +1,7 @@
 from datetime import datetime
 # from thermos.thermos import db
+from sqlalchemy import desc
+
 from thermos import db
 
 
@@ -11,6 +13,10 @@ class Bookmark(db.Model):
 
     def __repr__(self):
         return f"<Bookmark {self.description}: {self.url}>"
+
+    @staticmethod
+    def newest(num):
+        return Bookmark.query.order_by(desc(Bookmark.date)).limit(num)
 
 
 class User(db.Model):

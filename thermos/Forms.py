@@ -9,7 +9,7 @@ class BookmarkForm(FlaskForm):
     description = StringField('Add an optional description:')
 
     def validate(self):
-        if not self.url.data.startswith('http://') or self.url.data.startswith('https://'):
+        if not (self.url.data.startswith('http://') or self.url.data.startswith('https://')):
             self.url.data = 'http://' + self.url.data
         if not FlaskForm.validate(self):
             return False

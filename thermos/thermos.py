@@ -31,18 +31,14 @@ def store_bookmark(url, description):
 
 
 def new_bookmarks(num: int) -> List[dict]:
-    try:
-        return db.session().query(models.Bookmark).all()
-    except OperationalError:
-        models.create_db()
-    finally:
-        return db.session().query(models.Bookmark).all()
+    return models.Bookmark.newest(num)
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', new_bookmarks=new_bookmarks(5))
+    newest_five = new_bookmarks(5)
+    return render_template('index.html', new_bookmarks=newest_five)
 
 
 @app.route('/add', methods=['GET', 'POST'])
