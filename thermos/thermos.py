@@ -17,6 +17,9 @@ app = Flask(__name__)
 # app.secret_key = 'this_is_super_secret123'  # import os; os.urandom(24)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
+
+# to get rid of warning:"SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.logger.setLevel(logging.DEBUG)
 db = SQLAlchemy(app)
 
