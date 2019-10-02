@@ -18,7 +18,7 @@ Thermos - Welcome
             {% if bm.description %}
             ({{bm.description}})
             {% endif %}
-            was added by <i>{{ bm.user}}</i> on {{ bm.date }}</p>
+            was added by <i>{{ bm.user.username}}</i> on {{ bm.date }}</p>
         {% endfor %}
         {% else %}
         No bookmarks yet.
