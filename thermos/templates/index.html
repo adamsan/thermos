@@ -18,7 +18,8 @@ Thermos - Welcome
             {% if bm.description %}
             ({{bm.description}})
             {% endif %}
-            was added by <i>{{ bm.user.username}}</i> on {{ bm.date }}</p>
+            was added by <i><a href='{{url_for('user', username=bm.user.username)}}'>{{bm.user.username}}</a></i> on {{ bm.date }}
+        </p>
         {% endfor %}
         {% else %}
         No bookmarks yet.

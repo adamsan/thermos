@@ -49,6 +49,12 @@ def index():
     return render_template('index.html', new_bookmarks=newest_five)
 
 
+@app.route('/user/<username>')
+def user(username):
+    user = models.User.query.filter_by(username=username).first_or_404()
+    return render_template('user.html', user=user)
+
+
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     form = BookmarkForm()
